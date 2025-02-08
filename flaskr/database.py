@@ -1,8 +1,21 @@
 import sqlite3
 
 
+class Database:
+    def __init__(self) -> None:
+        self.connection = sqlite3.connect("database.db")
+        self.connection.row_factory = sqlite3.Row
+        self.connection.execute("PRAGMA foreign_keys = 1;")
+        self.cursor = self.connection.cursor()
+
+    def __del__(self) -> None:
+        self.cursor.close()
+        self.connection.close()
+
+
 def create_database():
     connection = sqlite3.connect("database.db")
+    connection.execute("PRAGMA foreign_keys = 1;")
     cursor = connection.cursor()
     cursor.execute(
         """
@@ -33,6 +46,7 @@ def create_database():
 
 def create_testing_data():
     connection = sqlite3.connect("database.db")
+    connection.execute("PRAGMA foreign_keys = 1;")
     cursor = connection.cursor()
     cursor.executemany(
         "INSERT INTO question(question_id, question) VALUES (?, ?);",
