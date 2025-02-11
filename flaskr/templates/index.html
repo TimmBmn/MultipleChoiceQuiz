@@ -8,7 +8,29 @@
 
     <title>Document</title>
 </head>
-<body>
-    TODO
+<body class="flex flex-col justify-center p-4 min-h-screen text-white bg-stone-900">
+    <h1 class="text-3xl font-bold">MultipleChoiceQuiz</h1>
+
+    <div id="question" class="flex flex-col gap-2">
+        {% include "question.html" %}
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 mt-2">
+        <button
+            class="p-2 rounded border"
+            hx-get="/api/correct_answers"
+            hx-include="#question_id, #answers"
+            hx-target="#answers"
+            >
+            Confirm
+        </button>
+
+        <button
+            class="p-2 rounded border"
+            hx-get="/api/random_question"
+            hx-target="#question">
+            Next Question
+        </button>
+    </div>
 </body>
 </html>

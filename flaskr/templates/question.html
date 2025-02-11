@@ -1,0 +1,12 @@
+<input type="hidden" id="question_id" name="question_id" value="{{question['question_id']}}">
+<h2 class="flex gap-2 text-xl text-justify">
+    <span class="font-bold text-red-500">Q:</span>
+    {{question["question"]}}
+</h2>
+
+
+<h2 class="text-xl font-bold text-blue-500">Answers:</h2>
+
+<form id="answers" class="flex flex-col gap-2">
+    {% include "answer-list.html" %}
+</form>
