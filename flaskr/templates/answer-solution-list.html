@@ -1,0 +1,22 @@
+{% for answer in answers %}
+    <div class="flex gap-2 items-start">
+        <input
+            class="min-h-6 min-w-6"
+            type="checkbox"
+            {% if answer["selected"] %}
+                checked
+            {% endif %}
+            disabled
+            >
+        <span
+            class="
+            {% if answer['correct'] == answer['selected'] %}
+                text-green-500
+            {% else %}
+                text-red-500
+            {% endif %}"
+            >
+            {{answer["answer"]}}
+        </span>
+    </div>
+{% endfor %}
