@@ -31,8 +31,6 @@ def correct_answers():
     question_id = request.args.get("question_id")
     selected_answers_id = request.args.getlist("answers[]")
 
-    print(selected_answers_id)
-
     database = Database()
     database.cursor.execute(
         "SELECT * FROM answer WHERE question_id = ?;", (question_id,)

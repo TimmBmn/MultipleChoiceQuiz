@@ -8,35 +8,37 @@
 
     <title>Document</title>
 </head>
-<body class="flex flex-col justify-center p-4 min-h-screen text-white bg-stone-900">
-    <h1 class="text-3xl font-bold">MultipleChoiceQuiz</h1>
+<body class="flex justify-center items-center bg-stone-900">
+    <div class="flex flex-col justify-center p-4 max-w-md min-h-screen text-white">
+        <h1 class="text-3xl font-bold">MultipleChoiceQuiz</h1>
 
-    <div id="question" class="flex flex-col gap-2">
-        {% if question is not none %}
-            {% include "question.html" %}
-        {% endif%}
-    </div>
+        <div id="question" class="flex flex-col gap-2">
+            {% if question is not none %}
+                {% include "question.html" %}
+            {% endif%}
+        </div>
 
-    <div class="flex gap-2 mt-2">
-        <button
-            id="confirm"
-            class="p-2 rounded border grow"
-            hx-get="/api/correct_answers"
-            hx-include="#question_id, #answers"
-            hx-target="#answers"
-            hx-on::after-request="document.getElementById('confirm').classList.add('hidden')"
-            >
-            Confirm
-        </button>
+        <div class="flex gap-2 mt-2">
+            <button
+                id="confirm"
+                class="p-2 rounded border grow"
+                hx-get="/api/correct_answers"
+                hx-include="#question_id, #answers"
+                hx-target="#answers"
+                hx-on::after-request="document.getElementById('confirm').classList.add('hidden')"
+                >
+                Confirm
+            </button>
 
-        <button
-            class="p-2 rounded border grow"
-            hx-get="/api/random_question"
-            hx-target="#question"
-            hx-on::after-request="document.getElementById('confirm').classList.remove('hidden')"
-            >
-            Next Question
-        </button>
+            <button
+                class="p-2 rounded border grow"
+                hx-get="/api/random_question"
+                hx-target="#question"
+                hx-on::after-request="document.getElementById('confirm').classList.remove('hidden')"
+                >
+                Next Question
+            </button>
+        </div>
     </div>
 
     <script>
