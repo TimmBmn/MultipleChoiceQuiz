@@ -26,6 +26,7 @@
                 hx-include="#question_id, #answers"
                 hx-target="#answers"
                 hx-on::after-request="document.getElementById('confirm').classList.add('hidden')"
+                hx-disable-elt="this"
                 >
                 Confirm
             </button>
@@ -35,6 +36,7 @@
                 hx-get="/api/random_question"
                 hx-target="#question"
                 hx-on::after-request="document.getElementById('confirm').classList.remove('hidden')"
+                hx-disable-elt="this"
                 >
                 Next Question
             </button>
