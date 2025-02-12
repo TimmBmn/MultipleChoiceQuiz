@@ -25,7 +25,7 @@
                 hx-get="/api/correct_answers"
                 hx-include="#question_id, #answers"
                 hx-target="#answers"
-                hx-on::after-request="document.getElementById('confirm').classList.add('hidden')"
+                hx-on::before-request="document.getElementById('confirm').classList.add('hidden')"
                 hx-disable-elt="this"
                 >
                 Confirm
