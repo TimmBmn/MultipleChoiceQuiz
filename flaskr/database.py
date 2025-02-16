@@ -1,4 +1,5 @@
 import sqlite3
+import uuid
 
 
 class Database:
@@ -11,6 +12,37 @@ class Database:
     def __del__(self) -> None:
         self.cursor.close()
         self.connection.close()
+
+
+class Answer:
+    def __init__(self, answer: str, correct: bool) -> None:
+        self.answer_id = str(uuid.uuid4())
+        self.answer = answer
+        self.correct = correct
+
+
+class Question:
+    def __init__(self, question: str, answers: list[Answer]) -> None:
+        self.question_id = str(uuid.uuid4())
+        self.question = question
+        self.answers = answers
+
+    def create(self):
+        database = Database()
+
+        database.cursor.execute(
+            "INSERT INTO question(question_id, question) VALUES (?, ?);",
+            (self.question_id, self.question),
+        )
+
+        database.cursor.executemany(
+            "INSERT INTO answer(answer_id, question_id, answer, correct) VALUES (?, ?, ?, ?);",
+            [
+                (answer.answer_id, self.question_id, answer.answer, answer.correct)
+                for answer in self.answers
+            ],
+        )
+        database.connection.commit()
 
 
 def create_database():
@@ -44,32 +76,5 @@ def create_database():
     connection.commit()
 
 
-def create_testing_data():
-    connection = sqlite3.connect("database.db")
-    connection.execute("PRAGMA foreign_keys = 1;")
-    cursor = connection.cursor()
-    cursor.executemany(
-        "INSERT INTO question(question_id, question) VALUES (?, ?);",
-        (
-            ["1", "who painted the mona lisa"],
-            ["2", "what is heavier, a kilogram of steel or a kilogram of feathers"],
-        ),
-    )
-
-    cursor.executemany(
-        "INSERT INTO answer(answer_id, question_id, answer, correct) VALUES (?, ?, ?, ?);",
-        (
-            ["1", "1", "davinci?", True],
-            ["2", "1", "leonardo", True],
-            ["3", "1", "brad pit", False],
-            ["4", "2", "but steels heavier than feathers", False],
-            ["5", "2", "their the same", True],
-            ["6", "2", "but how can feathers be heavier?", False],
-        ),
-    )
-    connection.commit()
-
-
 if __name__ == "__main__":
     create_database()
-    create_testing_data()
