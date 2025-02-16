@@ -1,13 +1,15 @@
 {% for answer in answers %}
     <div class="flex gap-2 items-start">
-        <input
-            class="min-h-6 min-w-6"
-            type="checkbox"
-            name="answers[]"
-            value="{{answer['answer_id']}}"
-            >
-        <span>
-            {{answer["answer"]}}
-        </span>
+        <label>
+            <input
+                class="min-h-6 min-w-6"
+                type="checkbox"
+                name="answers[]"
+                value="{{answer['answer_id']}}"
+                >
+            <span>
+                {{answer["answer"]}}
+            </span>
+        </label>
     </div>
 {% endfor %}
