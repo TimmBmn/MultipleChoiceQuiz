@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, Response, render_template, request
 
 from flaskr.database import Database
 
@@ -20,9 +20,11 @@ def random_question():
     )
     answers_data = database.cursor.fetchall()
 
-    return render_template(
-        "question.html", question=question_data, answers=answers_data
+    response = Response(
+        render_template("question.html", question=question_data, answers=answers_data)
     )
+    response.headers.add("HX-Replace-Url", f"/{question_data['question_id']}")
+    return response
 
 
 @api_blueprint.route("/correct_answers", methods=["GET"])

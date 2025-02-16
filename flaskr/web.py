@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template
 
 from flaskr.database import Database
 
@@ -13,7 +13,7 @@ def random_question():
     )
 
     question_data = database.cursor.fetchone()
-    return specific_question(question_data["question_id"])
+    return redirect(f"/{question_data['question_id']}")
 
 
 @web_blueprint.route("/<string:question_id>", methods=["GET"])
