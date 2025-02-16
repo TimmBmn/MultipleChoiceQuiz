@@ -576,9 +576,6 @@
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
-  .text-justify {
-    text-align: justify;
-  }
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
@@ -593,9 +590,6 @@
   }
   .text-blue-500 {
     color: var(--color-blue-500);
-  }
-  .text-green-500 {
-    color: var(--color-green-500);
   }
   .text-red-500 {
     color: var(--color-red-500);
