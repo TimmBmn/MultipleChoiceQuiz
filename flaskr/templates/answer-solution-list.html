@@ -10,9 +10,7 @@
             >
         <span
             class="
-            {% if answer['correct'] == answer['selected'] %}
-                text-green-500
-            {% else %}
+            {% if answer['correct'] != answer['selected'] %}
                 text-red-500
             {% endif %}"
             >
