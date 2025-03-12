@@ -1,5 +1,6 @@
 {% for answer in answers %}
     <label class="flex gap-2 items-start">
+        <input type="hidden" name="ordering[]" value="{{loop.index0}};{{answer['answer_id']}}">
         <input
             class="min-h-6 min-w-6"
             type="checkbox"

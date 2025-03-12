@@ -1,3 +1,5 @@
+import random
+
 from flask import Blueprint, redirect, render_template
 
 from flaskr.database import Database
@@ -28,5 +30,6 @@ def specific_question(question_id: str):
         "SELECT * FROM answer WHERE question_id = ?;", (question_id,)
     )
     answers_data = database.cursor.fetchall()
+    random.shuffle(answers_data)
 
     return render_template("index.html", question=question_data, answers=answers_data)
