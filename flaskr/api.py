@@ -1,7 +1,6 @@
-import random
-
 from flask import Blueprint, Response, render_template, request
 
+from flaskr import logic
 from flaskr.database import Database
 
 api_blueprint = Blueprint("api", __name__)
@@ -9,24 +8,13 @@ api_blueprint = Blueprint("api", __name__)
 
 @api_blueprint.route("/random_question", methods=["GET"])
 def random_question():
-
-    database = Database()
-    database.cursor.execute("SELECT * FROM question ORDER BY RANDOM() LIMIT 1;")
-
-    # only possible if there are no questions
-    if (question_data := database.cursor.fetchone()) is None:
-        return ""
-
-    database.cursor.execute(
-        "SELECT * FROM answer WHERE question_id = ?;", (question_data["question_id"],)
-    )
-    answers_data = database.cursor.fetchall()
-    random.shuffle(answers_data)
+    question_data, answers_data = logic.random_question()
 
     response = Response(
         render_template("question.html", question=question_data, answers=answers_data)
     )
-    response.headers.add("HX-Replace-Url", f"/{question_data['question_id']}")
+    if question_data is not None:
+        response.headers.add("HX-Replace-Url", f"/{question_data['question_id']}")
     return response
 
 
